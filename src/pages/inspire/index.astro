@@ -1,0 +1,53 @@
+---
+---
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Get Inspired – malcolm.im</title>
+    <link rel="icon" href="/favicon.png" type="image/png" />
+    <script src="/quotes.js" defer></script>
+    <style>
+      body {
+        font-family: monospace;
+        background-color: #fff;
+        color: #111;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        margin: 0;
+        text-align: center;
+        height: 100vh;
+      }
+      #quote {
+        font-size: 1.2rem;
+        max-width: 600px;
+        margin-bottom: 2rem;
+        line-height: 1.6;
+      }
+      button {
+        font-family: monospace;
+        padding: 0.5rem 1rem;
+        border: 1px solid #333;
+        background: none;
+        cursor: pointer;
+      }
+      a {
+        margin-top: 2rem;
+        border: 1px solid #333;
+        padding: 0.5rem 1rem;
+        text-decoration: none;
+        color: #000;
+        display: inline-block;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Get Inspired</h1>
+    <div id="quote">Click the button below to get a quote.</div>
+    <button onclick="newQuote()">get inspired →</button>
+    <a href="/">← Back to home</a>
+  </body>
+</html>
