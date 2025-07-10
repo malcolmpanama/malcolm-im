@@ -1,14 +1,3 @@
----
-const images = [
-  "/images/malcolm1.jpg",
-  "/images/malcolm2.jpg",
-  "/images/malcolm3.jpg",
-  "/images/malcolm4.jpg",
-  "/images/malcolm5.jpg",
-  "/images/malcolm6.jpg"
-];
-const randomImage = images[Math.floor(Math.random() * images.length)];
----
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -25,24 +14,29 @@ const randomImage = images[Math.floor(Math.random() * images.length)];
         text-align: center;
         overflow-x: hidden;
       }
+
       h1, p, img, a {
         opacity: 0;
         transform: translateY(20px);
         animation: fadeUp 0.6s ease-out forwards;
       }
+
       h1 {
         animation-delay: 0.2s;
       }
+
       img {
         max-width: 200px;
         border-radius: 50%;
         margin: 2rem 0;
         animation-delay: 0.4s;
       }
+
       p:nth-of-type(1) { animation-delay: 0.6s; }
       p:nth-of-type(2) { animation-delay: 0.8s; }
       p:nth-of-type(3) { animation-delay: 1.0s; }
       p:nth-of-type(4) { animation-delay: 1.2s; }
+
       a {
         text-decoration: none;
         color: #000;
@@ -53,6 +47,7 @@ const randomImage = images[Math.floor(Math.random() * images.length)];
         transition: background-color 0.3s, color 0.3s;
         animation-delay: 1.4s;
       }
+
       a:hover {
         background-color: #111;
         color: #fff;
@@ -68,12 +63,28 @@ const randomImage = images[Math.floor(Math.random() * images.length)];
   </head>
   <body>
     <h1>About</h1>
-    <img src={randomImage} alt="Malcolm" />
+
+    <!-- Initially load the first image, then replace it in JS -->
+    <img id="randomImage" src="/images/malcolm1.jpg" alt="Malcolm" />
+
     <p><strong>I'm Malcolm — a creator, consultant, and traveler from Panama.</strong></p>
     <p>For over a decade, I’ve lived in Asia — building businesses, learning languages, and bridging cultures.</p>
     <p>I build software, make videos, and promote better thinking.</p>
     <p>This space is where I share ideas, recommend books and games, and help others live a more intentional, creative, and global life.</p>
 
     <a href="/">← Back to home</a>
+
+    <script>
+      const images = [
+        "/images/malcolm1.jpg",
+        "/images/malcolm2.jpg",
+        "/images/malcolm3.jpg",
+        "/images/malcolm4.jpg",
+        "/images/malcolm5.jpg",
+        "/images/malcolm6.jpg"
+      ];
+      const randomImage = images[Math.floor(Math.random() * images.length)];
+      document.getElementById("randomImage").src = randomImage;
+    </script>
   </body>
 </html>
