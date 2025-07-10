@@ -6,35 +6,78 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Contact – malcolm.im</title>
     <link rel="icon" href="/favicon.png" type="image/png" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <style>
       body {
         font-family: monospace;
         background-color: #fff;
         color: #111;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        height: 100vh;
+        padding: 2rem;
         margin: 0;
         text-align: center;
       }
-      a {
-        color: #000;
+
+      h1 {
+        margin-bottom: 1rem;
+      }
+
+      .contact-links {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+        margin-top: 2rem;
+        margin-bottom: 2rem;
+      }
+
+      .contact-links a {
         text-decoration: none;
+        color: #000;
         border: 1px solid #333;
-        padding: 0.5rem 1rem;
-        margin: 0.5rem;
+        padding: 0.4rem 0.75rem;
+        font-size: 0.9rem;
+        max-width: 220px;
+        width: 100%;
+        transition: transform 0.2s ease, opacity 0.2s ease;
+        border-radius: 4px;
+      }
+
+      .contact-links:hover a {
+        opacity: 0.6;
+        transform: scale(0.95);
+      }
+
+      .contact-links a:hover {
+        transform: scale(1.1);
+        opacity: 1;
+        z-index: 1;
+      }
+
+      .contact-links i {
+        margin-right: 0.5rem;
+      }
+
+      .back-link {
+        text-decoration: none;
+        color: #000;
+        border: 1px solid #333;
+        padding: 0.4rem 0.75rem;
         display: inline-block;
+        font-size: 0.9rem;
+        border-radius: 4px;
       }
     </style>
   </head>
-  <body> 
+  <body>
     <h1>Contact</h1>
-    <a href="mailto:malcolmlegend@gmail.com">Email Me</a>
-    <a href="https://instagram.com/malcolm_abroad" target="_blank">Instagram</a>
-    <a href="https://discord.gg/cper4yEA" target="_blank">Join Discord</a>
-    <br><br>
-    <a href="/">← Back to home</a>
+
+    <div class="contact-links">
+      <a href="mailto:contactmalcolmdd@gmail.com"><i class="fas fa-envelope"></i>Email Me</a>
+      <a href="https://instagram.com/malcolm_abroad" target="_blank"><i class="fab fa-instagram"></i>Instagram</a>
+      <a href="https://www.linkedin.com/in/malcolmddaniels" target="_blank"><i class="fab fa-linkedin"></i>LinkedIn</a>
+      <a href="https://discord.gg/cper4yEA" target="_blank"><i class="fab fa-discord"></i>Join Discord</a>
+    </div>
+
+    <a href="/" class="back-link">← Back to home</a>
   </body>
 </html>

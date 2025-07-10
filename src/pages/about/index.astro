@@ -1,4 +1,13 @@
 ---
+const images = [
+  "/images/malcolm1.jpg",
+  "/images/malcolm2.jpg",
+  "/images/malcolm3.jpg",
+  "/images/malcolm4.jpg",
+  "/images/malcolm5.jpg",
+  "/images/malcolm6.jpg"
+];
+const randomImage = images[Math.floor(Math.random() * images.length)];
 ---
 <html lang="en">
   <head>
@@ -11,38 +20,60 @@
         font-family: monospace;
         background-color: #fff;
         color: #111;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
         padding: 2rem;
         margin: 0;
         text-align: center;
+        overflow-x: hidden;
       }
-      p {
-        max-width: 600px;
-        line-height: 1.6;
+      h1, p, img, a {
+        opacity: 0;
+        transform: translateY(20px);
+        animation: fadeUp 0.6s ease-out forwards;
       }
+      h1 {
+        animation-delay: 0.2s;
+      }
+      img {
+        max-width: 200px;
+        border-radius: 50%;
+        margin: 2rem 0;
+        animation-delay: 0.4s;
+      }
+      p:nth-of-type(1) { animation-delay: 0.6s; }
+      p:nth-of-type(2) { animation-delay: 0.8s; }
+      p:nth-of-type(3) { animation-delay: 1.0s; }
+      p:nth-of-type(4) { animation-delay: 1.2s; }
       a {
-        color: #000;
         text-decoration: none;
+        color: #000;
         border: 1px solid #333;
         padding: 0.5rem 1rem;
-        margin-top: 2rem;
         display: inline-block;
+        margin-top: 2rem;
+        transition: background-color 0.3s, color 0.3s;
+        animation-delay: 1.4s;
+      }
+      a:hover {
+        background-color: #111;
+        color: #fff;
+      }
+
+      @keyframes fadeUp {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
       }
     </style>
   </head>
   <body>
     <h1>About</h1>
-    <p>
-      I’m Malcolm — a creator, consultant, and traveler from Panama. I’ve lived in Asia for over a decade,
-      building businesses, learning languages, and connecting cultures. I use this space to share ideas, 
-      recommend books and games, and help others live a more intentional, creative, and global life.
-    </p>
-    <p>
-      This site is minimal by design. Just links to what matters.
-    </p>
+    <img src={randomImage} alt="Malcolm" />
+    <p><strong>I'm Malcolm — a creator, consultant, and traveler from Panama.</strong></p>
+    <p>For over a decade, I’ve lived in Asia — building businesses, learning languages, and bridging cultures.</p>
+    <p>I build software, make videos, and promote better thinking.</p>
+    <p>This space is where I share ideas, recommend books and games, and help others live a more intentional, creative, and global life.</p>
+
     <a href="/">← Back to home</a>
   </body>
 </html>

@@ -1,0 +1,77 @@
+---
+---
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Movie Picks – malcolm.im</title>
+    <link rel="icon" href="/favicon.png" type="image/png" />
+    <style>
+      body {
+        font-family: monospace;
+        background-color: #fff;
+        color: #111;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        margin: 0;
+        text-align: center;
+      }
+
+      h1 {
+        margin-bottom: 1.5rem;
+      }
+
+      .decades {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+
+      .decades a {
+        text-decoration: none;
+        color: #000;
+        border: 1px solid #000;
+        padding: 0.5rem 1rem;
+        display: inline-block;
+        transition: transform 0.2s ease, opacity 0.2s ease;
+      }
+
+      .decades:hover a {
+        opacity: 0.6;
+        transform: scale(0.95);
+      }
+
+      .decades a:hover {
+        transform: scale(1.1);
+        opacity: 1;
+        z-index: 1;
+      }
+
+      .back {
+        margin-top: 2rem;
+        text-decoration: none;
+        color: #000;
+        border: 1px solid #000;
+        padding: 0.5rem 1rem;
+        display: inline-block;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Movie Picks by Decade</h1>
+
+    <div class="decades">
+      <a href="/picks/movies/2020s">2020s</a>
+      <a href="/picks/movies/2010s">2010s</a>
+      <a href="/picks/movies/2000s">2000s</a>
+      <a href="/picks/movies/90s">1990s</a>
+      <a href="/picks/movies/80s">1980s</a>
+      <a href="/picks/movies/70s">1970s</a>
+    </div>
+
+    <a class="back" href="/picks">← Back to Picks</a>
+  </body>
+</html>

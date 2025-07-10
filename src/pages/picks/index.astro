@@ -4,7 +4,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Support – malcolm.im</title>
+    <title>Picks – malcolm.im</title>
     <link rel="icon" href="/favicon.png" type="image/png" />
     <style>
       body {
@@ -20,7 +20,7 @@
         margin-bottom: 1rem;
       }
 
-      .support-options {
+      .pick-links {
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -28,25 +28,22 @@
         margin: 2rem 0;
       }
 
-      .support-options a {
-        display: block;
+      .pick-links a {
         text-decoration: none;
         color: #000;
         border: 1px solid #333;
-        padding: 0.4rem 0.75rem;
-        font-size: 0.9rem;
-        max-width: 220px;
-        width: 100%;
-        border-radius: 4px;
+        padding: 0.5rem 1rem;
+        font-size: 0.95rem;
         transition: transform 0.2s ease, opacity 0.2s ease;
+        width: 200px;
       }
 
-      .support-options:hover a {
+      .pick-links:hover a {
         opacity: 0.6;
         transform: scale(0.95);
       }
 
-      .support-options a:hover {
+      .pick-links a:hover {
         transform: scale(1.1);
         opacity: 1;
         z-index: 1;
@@ -56,22 +53,23 @@
         text-decoration: none;
         color: #000;
         border: 1px solid #333;
-        padding: 0.4rem 0.75rem;
-        display: inline-block;
+        padding: 0.5rem 1rem;
         font-size: 0.9rem;
-        border-radius: 4px;
+        margin-top: 2rem;
+        display: inline-block;
       }
     </style>
   </head>
   <body>
-    <h1>Support</h1>
-    <p>If you'd like to support my work, here are a couple of ways you can help:</p>
+    <h1>My Picks</h1>
 
-    <div class="support-options">
-      <a href="https://buymeacoffee.com/malcolmlegy" target="_blank">☕ Buy me a coffee</a>
-      <a href="https://patreon.com/malcolmtalks?utm_medium=clipboard_copy&utm_source=copyLink&utm_campaign=creatorshare_creator&utm_content=join_link" target="_blank">🎁 Join my Patreon</a>
+    <div class="pick-links">
+      <a href="/picks/books">📚 Books</a>
+      <a href="/picks/music">🎧 Music</a>
+      <a href="/picks/games">🎮 Games</a>
+      <a href="/picks/movies">🎬 Movies</a>
     </div>
 
-    <a href="/" class="back-link">← Back to home</a>
+    <a class="back-link" href="/">← Back to home</a>
   </body>
 </html>
