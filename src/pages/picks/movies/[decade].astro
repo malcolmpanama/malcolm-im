@@ -1,0 +1,37 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import PickList from "../../../components/PickList.astro";
+import BackLink from "../../../components/BackLink.astro";
+import { decades, type Decade } from "../../../data/picks.ts";
+
+export function getStaticPaths() {
+  return decades.map((decade) => ({
+    params: { decade: decade.slug },
+    props: { decade },
+  }));
+}
+
+interface Props {
+  decade: Decade;
+}
+
+const { decade } = Astro.props;
+const highlights = decade.films
+  .slice(0, 3)
+  .map((film) => film.name)
+  .join(", ");
+---
+
+<Layout
+  title={`Movies · ${decade.label}`}
+  description={`${decade.films.length} films from the ${decade.label} picked by Malcolm Daniels, including ${highlights}.`}
+>
+  <div class="stack">
+    <h1 class="title rise rise-1">Movies {decade.label}</h1>
+    <p class="lede rise rise-1">{decade.films.length} films.</p>
+  </div>
+
+  <PickList items={decade.films} />
+
+  <BackLink href="/picks/movies" label="Back to all movies" />
+</Layout>

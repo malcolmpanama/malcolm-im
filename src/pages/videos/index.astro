@@ -1,0 +1,52 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { getVideos, YOUTUBE_URL } from "../../lib/feeds.ts";
+
+const videos = await getVideos();
+---
+
+<Layout
+  title="Videos"
+  description="Videos by Malcolm Daniels on moving to Thailand, cost of living in Asia and life abroad."
+>
+  <div class="stack">
+    <h1 class="title rise rise-1">Videos</h1>
+    <p class="lede rise rise-1">
+      Cost of living, visas and what moving to Asia is actually like.
+    </p>
+  </div>
+
+  {
+    videos.length > 0 ? (
+      <ul class="videos rise rise-2">
+        {videos.map((video, index) => (
+          <li>
+            <a class="video" href={video.url} target="_blank" rel="noopener noreferrer">
+              <img
+                class="video__thumb"
+                src={video.thumbnail}
+                alt=""
+                width="480"
+                height="270"
+                loading={index < 3 ? "eager" : "lazy"}
+              />
+              <span class="video__title">{video.title}</span>
+              {video.date && <span class="video__date">{video.date}</span>}
+            </a>
+          </li>
+        ))}
+      </ul>
+    ) : (
+      <p class="lede rise rise-2">
+        The feed could not be loaded. Watch everything on YouTube instead.
+      </p>
+    )
+  }
+
+  <div class="footer">
+    <a class="card" href={YOUTUBE_URL} target="_blank" rel="noopener noreferrer">
+      Subscribe on YouTube
+    </a>
+    <a class="back" href="/">&larr; Back to home</a>
+  </div>
+</Layout>

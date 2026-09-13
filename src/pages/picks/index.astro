@@ -1,75 +1,29 @@
 ---
+import Layout from "../../layouts/Layout.astro";
+import Cards from "../../components/Cards.astro";
+import Card from "../../components/Card.astro";
+import Icon from "../../components/Icon.astro";
+import BackLink from "../../components/BackLink.astro";
 ---
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Picks – malcolm.im</title>
-    <link rel="icon" href="/favicon.png" type="image/png" />
-    <style>
-      body {
-        font-family: monospace;
-        background-color: #fff;
-        color: #111;
-        padding: 2rem;
-        margin: 0;
-        text-align: center;
-      }
 
-      h1 {
-        margin-bottom: 1rem;
-      }
+<Layout
+  title="Picks"
+  description="Books, music, games and films worth your time, picked by Malcolm Daniels."
+  centered
+>
+  <div class="stack">
+    <h1 class="title rise rise-1">Picks</h1>
+    <p class="lede rise rise-2">
+      The books, records, games and films that were worth the hours.
+    </p>
+  </div>
 
-      .pick-links {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 1rem;
-        margin: 2rem 0;
-      }
+  <Cards column class="rise rise-3">
+    <Card href="/picks/books"><Icon name="book" />Books</Card>
+    <Card href="/picks/music"><Icon name="music" />Music</Card>
+    <Card href="/picks/games"><Icon name="game" />Games</Card>
+    <Card href="/picks/movies"><Icon name="film" />Movies</Card>
+  </Cards>
 
-      .pick-links a {
-        text-decoration: none;
-        color: #000;
-        border: 1px solid #333;
-        padding: 0.5rem 1rem;
-        font-size: 0.95rem;
-        transition: transform 0.2s ease, opacity 0.2s ease;
-        width: 200px;
-      }
-
-      .pick-links:hover a {
-        opacity: 0.6;
-        transform: scale(0.95);
-      }
-
-      .pick-links a:hover {
-        transform: scale(1.1);
-        opacity: 1;
-        z-index: 1;
-      }
-
-      .back-link {
-        text-decoration: none;
-        color: #000;
-        border: 1px solid #333;
-        padding: 0.5rem 1rem;
-        font-size: 0.9rem;
-        margin-top: 2rem;
-        display: inline-block;
-      }
-    </style>
-  </head>
-  <body>
-    <h1>My Picks</h1>
-
-    <div class="pick-links">
-      <a href="/picks/books">📚 Books</a>
-      <a href="/picks/music">🎧 Music</a>
-      <a href="/picks/games">🎮 Games</a>
-      <a href="/picks/movies">🎬 Movies</a>
-    </div>
-
-    <a class="back-link" href="/">← Back to home</a>
-  </body>
-</html>
+  <BackLink />
+</Layout>

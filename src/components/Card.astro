@@ -1,0 +1,19 @@
+---
+interface Props {
+  href: string;
+}
+
+const { href } = Astro.props;
+
+// Anything off-site opens in a new tab, with rel set so the new tab
+// cannot reach back into this one.
+const external = /^https?:\/\//.test(href);
+---
+
+<a
+  class="card"
+  href={href}
+  {...external ? { target: "_blank", rel: "noopener noreferrer" } : {}}
+>
+  <slot />
+</a>

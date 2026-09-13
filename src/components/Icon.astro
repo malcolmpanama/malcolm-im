@@ -1,0 +1,13 @@
+---
+import { iconPaths, type IconName } from "./icons.ts";
+
+interface Props {
+  name: IconName;
+}
+
+const { name } = Astro.props;
+---
+
+<svg class="card__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+  <path d={iconPaths[name]}></path>
+</svg>

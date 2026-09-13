@@ -1,0 +1,20 @@
+---
+import type { PickItem } from "../data/picks.ts";
+
+interface Props {
+  items: PickItem[];
+}
+
+const { items } = Astro.props;
+---
+
+<ul class="list rise rise-2">
+  {
+    items.map((item) => (
+      <li>
+        <span class="list__name">{item.name}</span>
+        {item.note && <span class="list__note">{item.note}</span>}
+      </li>
+    ))
+  }
+</ul>

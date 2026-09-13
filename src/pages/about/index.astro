@@ -1,90 +1,98 @@
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>About – malcolm.im</title>
-    <link rel="icon" href="/favicon.png" type="image/png" />
-    <style>
-      body {
-        font-family: monospace;
-        background-color: #fff;
-        color: #111;
-        padding: 2rem;
-        margin: 0;
-        text-align: center;
-        overflow-x: hidden;
-      }
+---
+import Layout from "../../layouts/Layout.astro";
+import BackLink from "../../components/BackLink.astro";
 
-      h1, p, img, a {
-        opacity: 0;
-        transform: translateY(20px);
-        animation: fadeUp 0.6s ease-out forwards;
-      }
+const photos = [
+  "/images/malcolm1.jpg",
+  "/images/malcolm2.jpg",
+  "/images/malcolm3.jpg",
+  "/images/malcolm4.jpg",
+  "/images/malcolm5.jpg",
+  "/images/malcolm6.jpg",
+];
 
-      h1 {
-        animation-delay: 0.2s;
-      }
+// Picked at build time so the portrait is real HTML on first paint.
+// Clicking it shuffles, which is where the randomness now lives.
+const initial = photos[Math.floor(Math.random() * photos.length)];
+---
 
-      img {
-        max-width: 200px;
-        border-radius: 50%;
-        margin: 2rem 0;
-        animation-delay: 0.4s;
-      }
+<Layout
+  title="About"
+  description="Malcolm Daniels: creator, consultant and traveler from Panama. A decade in Asia building businesses, learning languages and bridging cultures."
+>
+  <div class="stack">
+    <h1 class="title rise rise-1">About</h1>
 
-      p:nth-of-type(1) { animation-delay: 0.6s; }
-      p:nth-of-type(2) { animation-delay: 0.8s; }
-      p:nth-of-type(3) { animation-delay: 1.0s; }
-      p:nth-of-type(4) { animation-delay: 1.2s; }
+    <button
+      class="portrait-button rise rise-2"
+      type="button"
+      data-shuffle
+      data-photos={JSON.stringify(photos)}
+    >
+      <img
+        class="portrait"
+        id="portrait"
+        src={initial}
+        alt="Malcolm"
+        width="400"
+        height="400"
+        fetchpriority="high"
+      />
+      <span class="visually-hidden">Show another photo</span>
+    </button>
 
-      a {
-        text-decoration: none;
-        color: #000;
-        border: 1px solid #333;
-        padding: 0.5rem 1rem;
-        display: inline-block;
-        margin-top: 2rem;
-        transition: background-color 0.3s, color 0.3s;
-        animation-delay: 1.4s;
-      }
+    <div class="prose rise rise-3">
+      <p>
+        <strong>
+          I'm Malcolm, a creator, consultant and traveler from Panama.
+        </strong>
+      </p>
+      <p>
+        For over a decade I've lived in Asia, building businesses, learning
+        languages and bridging cultures.
+      </p>
+      <p>I build software, make videos, and promote better thinking.</p>
+      <p>
+        This space is where I share ideas, recommend books and games, and help
+        others live a more intentional, creative, and global life.
+      </p>
+    </div>
+  </div>
 
-      a:hover {
-        background-color: #111;
-        color: #fff;
-      }
+  <BackLink />
+</Layout>
 
-      @keyframes fadeUp {
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <h1>About</h1>
+<style>
+  .portrait-button {
+    padding: 0;
+    border: 0;
+    background: none;
+    cursor: pointer;
+    border-radius: 50%;
+    line-height: 0;
+  }
 
-    <!-- Initially load the first image, then replace it in JS -->
-    <img id="randomImage" src="/images/malcolm1.jpg" alt="Malcolm" />
+  .portrait-button:hover .portrait,
+  .portrait-button:focus-visible .portrait {
+    border-color: var(--accent);
+  }
 
-    <p><strong>I'm Malcolm — a creator, consultant, and traveler from Panama.</strong></p>
-    <p>For over a decade, I’ve lived in Asia — building businesses, learning languages, and bridging cultures.</p>
-    <p>I build software, make videos, and promote better thinking.</p>
-    <p>This space is where I share ideas, recommend books and games, and help others live a more intentional, creative, and global life.</p>
+  .portrait-button .portrait {
+    transition: border-color 0.18s ease;
+  }
+</style>
 
-    <a href="/">← Back to home</a>
+<script>
+  const button = document.querySelector<HTMLButtonElement>("[data-shuffle]");
+  const image = document.querySelector<HTMLImageElement>("#portrait");
 
-    <script>
-      const images = [
-        "/images/malcolm1.jpg",
-        "/images/malcolm2.jpg",
-        "/images/malcolm3.jpg",
-        "/images/malcolm4.jpg",
-        "/images/malcolm5.jpg",
-        "/images/malcolm6.jpg"
-      ];
-      const randomImage = images[Math.floor(Math.random() * images.length)];
-      document.getElementById("randomImage").src = randomImage;
-    </script>
-  </body>
-</html>
+  if (button && image) {
+    const photos: string[] = JSON.parse(button.dataset.photos ?? "[]");
+
+    button.addEventListener("click", () => {
+      const others = photos.filter((src) => !image.src.endsWith(src));
+      if (others.length === 0) return;
+      image.src = others[Math.floor(Math.random() * others.length)];
+    });
+  }
+</script>

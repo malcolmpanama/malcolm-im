@@ -1,52 +1,71 @@
-# Astro Starter Kit: Basics
+# malcolm.im
+
+Personal site for Malcolm Daniels. Built with [Astro](https://astro.build), no
+runtime framework, no CSS library.
+
+## Running it
 
 ```sh
-npm create astro@latest -- --template basics
+npm install
+npm run dev -- --port 4321
 ```
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/basics)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/basics)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/basics/devcontainer.json)
+| Command           | What it does                            |
+| ----------------- | --------------------------------------- |
+| `npm run dev`     | Dev server with hot reload              |
+| `npm run build`   | Static build into `./dist/`             |
+| `npm run preview` | Serve the built output locally          |
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## How it is put together
 
-![just-the-basics](https://github.com/withastro/astro/assets/2244813/a0a5533c-a856-4198-8470-2d67b1d7c554)
-
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
+```
+src/
+  styles/global.css      design tokens + every shared style
+  layouts/Layout.astro   the one shell: head, SEO, theme, page frame
+  components/            Card, Cards, Icon, PickList, BackLink, ThemeToggle
+  data/picks.ts          books, games, playlists, films by decade
+  data/quotes.ts         quotes for /inspire
+  lib/feeds.ts           Substack and YouTube feeds, fetched at build time
+  pages/                 thin pages that pull from data/ and components/
 ```
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+Two rules keep it tidy:
 
-## 🧞 Commands
+1. **Pages hold no styling.** Anything visual lives in `global.css` as a token
+   or a class. A page only reaches for a `<style>` block when a rule is genuinely
+   used once and nowhere else.
+2. **Lists are data, not markup.** To add a book, a game, a playlist or a film,
+   edit `src/data/picks.ts`. Nothing else needs to change. Adding a whole new
+   decade of films also creates its page automatically, because
+   `pages/picks/movies/[decade].astro` builds one route per entry.
 
-All commands are run from the root of the project, from a terminal:
+## Feeds
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+`/videos` and `/essays` render the latest from YouTube and Substack. Both are
+fetched **at build time**, so visitors never wait on a third party and the pages
+are plain static HTML. Neither needs an API key: Substack exposes `/feed`, and
+YouTube exposes `videos.xml?channel_id=UCSLltHiDVUsVBw6nHvUEzqg`.
 
-## 👀 Want to learn more?
+A failed fetch logs a warning and returns an empty list rather than breaking the
+build, and the page falls back to a link out to the platform. The practical
+consequence is that **new posts and videos appear only when the site rebuilds**,
+so the host should be set to rebuild on a schedule if that matters.
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+## Theme
+
+The site follows the operating system's light or dark setting. The toggle in the
+top right overrides that and stores the choice in `localStorage`. An inline
+script in `Layout.astro` applies the stored value before first paint so there is
+no flash of the wrong theme.
+
+## SEO
+
+`astro.config.mjs` sets `site`, which drives canonical URLs, Open Graph and
+Twitter card images, and the generated `/sitemap.xml` and `/robots.txt`. When a
+page is added, add its path to the `routes` array in `src/pages/sitemap.xml.ts`.
+Film decade pages are picked up from the data automatically.
+
+## Copy style
+
+No em dashes anywhere in site copy. Use commas, full stops, or restructure the
+sentence. Separators in lists are drawn in CSS, not typed into the data.

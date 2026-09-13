@@ -1,69 +1,45 @@
 ---
+import Layout from "../layouts/Layout.astro";
+import Cards from "../components/Cards.astro";
+import Card from "../components/Card.astro";
+
+// videos and essays now point at on-site pages that render the latest from the
+// YouTube and Substack feeds, rather than bouncing straight off the domain.
+const links = [
+  { href: "/videos", label: "videos" },
+  { href: "/essays", label: "essays" },
+  { href: "https://malcolm-kez-shop.fourthwall.com/", label: "digital products" },
+  { href: "/inspire", label: "get inspired" },
+  { href: "/picks", label: "picks" },
+  { href: "/contact", label: "contact" },
+  { href: "/about", label: "about" },
+];
 ---
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>malcolm.im</title>
-    <link rel="icon" href="/favicon.png" type="image/png" />
-    <style>
-      body {
-        font-family: monospace;
-        background-color: #fff;
-        color: #111;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        height: 100vh;
-        text-align: center;
-        margin: 0;
-      }
 
-      h1 {
-        font-size: 2rem;
-        margin-bottom: 1rem;
-      }
+<Layout
+  title="malcolm.im"
+  description="Malcolm Daniels. Creator, consultant and traveler from Panama, living in Asia. Videos, essays, digital products and the books, films, games and music worth your time."
+  bare
+  centered
+>
+  <div class="stack">
+    <h1 class="home-name rise rise-1">malcolm</h1>
+    <p class="lede rise rise-2">
+      Creator, consultant and traveler from Panama. A decade in Asia, building
+      things and writing about it.
+    </p>
+  </div>
 
-      .links {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 0.75rem;
-      }
+  <Cards class="rise rise-3">
+    {links.map((link) => <Card href={link.href}>{link.label}</Card>)}
+  </Cards>
+</Layout>
 
-      .links a {
-        border: 1px solid #333;
-        padding: 0.5rem 1rem;
-        text-decoration: none;
-        color: #000;
-        font-size: 0.9rem;
-        transition: transform 0.2s ease, opacity 0.2s ease;
-      }
-
-      .links:hover a {
-        opacity: 0.6;
-        transform: scale(0.95);
-      }
-
-      .links a:hover {
-        transform: scale(1.1);
-        opacity: 1;
-        z-index: 1;
-      }
-    </style>
-  </head>
-  <body>
-    <h1>malcolm</h1>
-    <div class="links">
-      <a href="https://www.youtube.com/@malcolmtalks">videos</a>
-      <a href="https://malcolmdaniels.substack.com/">essays</a>
-      <a href="https://malcolmproducts.gumroad.com/">digital products</a>
-      <a href="/inspire">get inspired</a>
-      <a href="/picks">picks</a>
-      <a href="/support">support me</a>
-      <a href="/contact">contact</a>
-      <a href="/about">about</a>
-    </div>
-  </body>
-</html>
+<style>
+  .home-name {
+    font-size: var(--step-3);
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    line-height: 1;
+  }
+</style>

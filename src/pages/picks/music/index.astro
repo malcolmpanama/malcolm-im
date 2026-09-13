@@ -1,76 +1,32 @@
 ---
+import Layout from "../../../layouts/Layout.astro";
+import Cards from "../../../components/Cards.astro";
+import Card from "../../../components/Card.astro";
+import Icon from "../../../components/Icon.astro";
+import BackLink from "../../../components/BackLink.astro";
+import { playlists } from "../../../data/picks.ts";
 ---
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Music – malcolm.im</title>
-    <link rel="icon" href="/favicon.png" type="image/png" />
-    <style>
-      body {
-        font-family: monospace;
-        background-color: #fff;
-        color: #111;
-        padding: 2rem;
-        margin: 0;
-        text-align: center;
-      }
 
-      h1 {
-        margin-bottom: 1rem;
-      }
+<Layout
+  title="Music"
+  description="Spotify playlists Malcolm Daniels keeps on repeat."
+  centered
+>
+  <div class="stack">
+    <h1 class="title rise rise-1">Music</h1>
+    <p class="lede rise rise-2">Playlists I keep on repeat.</p>
+  </div>
 
-      .playlist-list {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 1rem;
-        margin: 2rem 0;
-      }
+  <Cards column class="rise rise-3">
+    {
+      playlists.map((playlist) => (
+        <Card href={playlist.url}>
+          <Icon name="music" />
+          {playlist.name}
+        </Card>
+      ))
+    }
+  </Cards>
 
-      .playlist-list a {
-        text-decoration: none;
-        color: #000;
-        border: 1px solid #333;
-        padding: 0.4rem 0.75rem;
-        font-size: 0.9rem;
-        max-width: 220px;
-        width: 100%;
-        border-radius: 4px;
-        transition: transform 0.2s ease, opacity 0.2s ease;
-      }
-
-      .playlist-list:hover a {
-        opacity: 0.6;
-        transform: scale(0.95);
-      }
-
-      .playlist-list a:hover {
-        opacity: 1;
-        transform: scale(1.1);
-        z-index: 1;
-      }
-
-      .back-link {
-        text-decoration: none;
-        color: #000;
-        border: 1px solid #333;
-        padding: 0.4rem 0.75rem;
-        display: inline-block;
-        font-size: 0.9rem;
-        border-radius: 4px;
-      }
-    </style>
-  </head>
-  <body>
-    <h1>Music</h1>
-    <p>Playlists I keep on repeat:</p>
-
-    <div class="playlist-list">
-      <a href="https://open.spotify.com/playlist/6loFPU5OucHQhwhv52Uwiq?si=e617685e711f4210" target="_blank">🌫️ If Silence Could Sing</a>
-      <a href="https://open.spotify.com/playlist/32R8XCRlGmH4aYlIKFV7LM?si=b169bc5e0f2e47a6" target="_blank">🛰️ Echoes of 2099</a>
-    </div>
-
-    <a href="/picks" class="back-link">← Back to picks</a>
-  </body>
-</html>
+  <BackLink href="/picks" label="Back to picks" />
+</Layout>

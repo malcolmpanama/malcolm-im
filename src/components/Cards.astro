@@ -1,0 +1,13 @@
+---
+interface Props {
+  /** Stack the cards vertically at a fixed width instead of wrapping in a row. */
+  column?: boolean;
+  class?: string;
+}
+
+const { column = false, class: className = "" } = Astro.props;
+---
+
+<nav class:list={["cards", { "cards--column": column }, className]}>
+  <slot />
+</nav>

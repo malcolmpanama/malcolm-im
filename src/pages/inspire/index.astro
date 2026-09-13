@@ -1,53 +1,50 @@
 ---
+import Layout from "../../layouts/Layout.astro";
+import BackLink from "../../components/BackLink.astro";
+import { quotes } from "../../data/quotes.ts";
+
+// One quote is rendered server side so the page never starts empty.
+const first = quotes[Math.floor(Math.random() * quotes.length)];
 ---
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Get Inspired – malcolm.im</title>
-    <link rel="icon" href="/favicon.png" type="image/png" />
-    <script src="/quotes.js" defer></script>
-    <style>
-      body {
-        font-family: monospace;
-        background-color: #fff;
-        color: #111;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        padding: 2rem;
-        margin: 0;
-        text-align: center;
-        height: 100vh;
-      }
-      #quote {
-        font-size: 1.2rem;
-        max-width: 600px;
-        margin-bottom: 2rem;
-        line-height: 1.6;
-      }
-      button {
-        font-family: monospace;
-        padding: 0.5rem 1rem;
-        border: 1px solid #333;
-        background: none;
-        cursor: pointer;
-      }
-      a {
-        margin-top: 2rem;
-        border: 1px solid #333;
-        padding: 0.5rem 1rem;
-        text-decoration: none;
-        color: #000;
-        display: inline-block;
-      }
-    </style>
-  </head>
-  <body>
-    <h1>Get Inspired</h1>
-    <div id="quote">Click the button below to get a quote.</div>
-    <button onclick="newQuote()">get inspired →</button>
-    <a href="/">← Back to home</a>
-  </body>
-</html>
+
+<Layout
+  title="Get Inspired"
+  description="A rotating set of quotes on discipline, systems and doing the work, collected by Malcolm Daniels."
+  centered
+>
+  <div class="stack">
+    <h1 class="title rise rise-1">Get Inspired</h1>
+
+    <blockquote class="quote rise rise-2" data-quote>
+      <p class="quote__text" data-quote-text>{first.text}</p>
+      {first.author && <cite class="quote__author" data-quote-author>{first.author}</cite>}
+      {!first.author && <cite class="quote__author" data-quote-author hidden />}
+    </blockquote>
+
+    <button class="button rise rise-3" type="button" data-next>
+      Another one
+    </button>
+  </div>
+
+  <BackLink />
+</Layout>
+
+<script>
+  import { quotes } from "../../data/quotes.ts";
+
+  const button = document.querySelector<HTMLButtonElement>("[data-next]");
+  const text = document.querySelector<HTMLElement>("[data-quote-text]");
+  const author = document.querySelector<HTMLElement>("[data-quote-author]");
+
+  button?.addEventListener("click", () => {
+    if (!text || !author) return;
+
+    // Never repeat the quote already on screen.
+    const others = quotes.filter((quote) => quote.text !== text.textContent);
+    const next = others[Math.floor(Math.random() * others.length)];
+
+    text.textContent = next.text;
+    author.textContent = next.author ?? "";
+    author.hidden = !next.author;
+  });
+</script>

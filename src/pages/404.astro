@@ -1,0 +1,25 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Cards from "../components/Cards.astro";
+import Card from "../components/Card.astro";
+---
+
+<Layout
+  title="Page not found"
+  description="That page does not exist on malcolm.im."
+  centered
+>
+  <div class="stack">
+    <h1 class="title rise rise-1">404</h1>
+    <p class="lede rise rise-2">
+      That page does not exist. It may have moved, or never have been here.
+    </p>
+  </div>
+
+  <Cards class="rise rise-3">
+    <Card href="/">Home</Card>
+    <Card href="/picks">Picks</Card>
+    <Card href="/about">About</Card>
+    <Card href="/contact">Contact</Card>
+  </Cards>
+</Layout>
