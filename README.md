@@ -46,10 +46,32 @@ fetched **at build time**, so visitors never wait on a third party and the pages
 are plain static HTML. Neither needs an API key: Substack exposes `/feed`, and
 YouTube exposes `videos.xml?channel_id=UCSLltHiDVUsVBw6nHvUEzqg`.
 
-A failed fetch logs a warning and returns an empty list rather than breaking the
-build, and the page falls back to a link out to the platform. The practical
+A failed fetch logs a warning rather than breaking the build. The practical
 consequence is that **new posts and videos appear only when the site rebuilds**,
-so the host should be set to rebuild on a schedule if that matters.
+so set Netlify to rebuild on a schedule if that matters.
+
+### Why /videos has a committed snapshot
+
+YouTube rate-limits its own `feeds.xml` endpoint and starts answering **404** to
+repeated automated requests. It did exactly that during development, which left
+`/videos` blank on a live deploy. So the feed is no longer the only source:
+
+1. Try the RSS feed. Best case, it works and carries exact publish dates.
+2. Otherwise fall back to `src/data/videos.json`, a committed snapshot.
+
+The page is therefore never empty, at worst slightly stale. Refresh the snapshot
+with:
+
+```sh
+npm run refresh:videos
+```
+
+That script tries the feed first and falls back to parsing the channel page,
+which uses YouTube's `lockupViewModel` layout. The channel page only gives
+relative dates ("2 weeks ago"), localised to wherever the request comes from, so
+snapshot entries carry no date and the site omits it for them. If YouTube
+changes that layout the script will fail loudly, and the old snapshot keeps
+serving until it is fixed.
 
 ## Theme
 

@@ -3,6 +3,8 @@
 // an empty list rather than breaking the build; the pages fall back to a plain
 // link out when that happens.
 
+import snapshot from "../data/videos.json";
+
 export const SUBSTACK_URL = "https://malcolmdaniels.substack.com/";
 export const YOUTUBE_URL = "https://www.youtube.com/@malcolmtalks";
 
@@ -103,23 +105,43 @@ export async function getEssays(limit = 12): Promise<Essay[]> {
     .slice(0, limit);
 }
 
+function toVideo(videoId: string, title: string, published: string): Video {
+  return {
+    videoId,
+    title,
+    url: `https://www.youtube.com/watch?v=${videoId}`,
+    // hqdefault is 4:3 with letterboxing, which the 16/9 crop in CSS
+    // removes. It is higher resolution than the true-16:9 mqdefault.
+    thumbnail: `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`,
+    date: published ? formatDate(published) : "",
+  };
+}
+
+/**
+ * YouTube rate-limits its own feeds.xml endpoint and starts answering 404 to
+ * repeated automated requests, which would leave this page empty on a build
+ * that happens to get blocked. The committed snapshot in data/videos.json is
+ * the floor: worst case the list is slightly stale, never blank.
+ * Refresh it with `npm run refresh:videos`.
+ */
 export async function getVideos(limit = 12): Promise<Video[]> {
   const xml = await fetchFeed(YOUTUBE_FEED, "YouTube");
-  if (!xml) return [];
 
-  return [...xml.matchAll(/<entry>([\s\S]*?)<\/entry>/g)]
-    .map(([, entry]) => {
-      const videoId = tag(entry, "yt:videoId");
-      return {
-        videoId,
-        title: tag(entry, "title"),
-        url: `https://www.youtube.com/watch?v=${videoId}`,
-        // hqdefault is 4:3 with letterboxing, which the 16/9 crop in CSS
-        // removes. It is higher resolution than the true-16:9 mqdefault.
-        thumbnail: `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`,
-        date: formatDate(tag(entry, "published")),
-      };
-    })
+  if (xml) {
+    const live = [...xml.matchAll(/<entry>([\s\S]*?)<\/entry>/g)]
+      .map(([, entry]) =>
+        toVideo(tag(entry, "yt:videoId"), tag(entry, "title"), tag(entry, "published")),
+      )
+      .filter((video) => video.videoId && video.title);
+
+    if (live.length > 0) return live.slice(0, limit);
+  }
+
+  console.warn(
+    `[feeds] using the committed snapshot from ${snapshot.capturedAt} (${snapshot.videos.length} videos)`,
+  );
+  return snapshot.videos
+    .map((video) => toVideo(video.videoId, video.title, video.published))
     .filter((video) => video.videoId && video.title)
     .slice(0, limit);
 }
